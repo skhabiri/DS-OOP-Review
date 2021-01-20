@@ -1,6 +1,6 @@
 '''Game class to model a football game
 '''
-from teams import team_names
+# from teams import team_names
 import random
 
 
@@ -36,6 +36,8 @@ class Game:
             self.score = score
         self.week = week
 
+    # The class fields are passed to the method as "self"
+    # Game().touchdown(self, ...)
     def touchdown(self, team, extra_point=1):
         '''record td for a team
         Parameters
@@ -51,7 +53,7 @@ class Game:
             self.score[team] += (6 + extra_point)
 
     def field_goal(self, team):
-        '''record td for a team
+        '''record field goal for a team
         Parameters
         -----------------------------
         team : str
@@ -62,8 +64,13 @@ class Game:
         else:
             self.score[team] += 3
 
-    def safety(self, TODO):
-        pass  # TODO (a safety is worth 2 points)
+    def safety(self, team):
+        # pass  # TODO (a safety is worth 2 points)
+
+        if team not in self.teams:
+            raise ValueError('team parameter must be in self.teams')
+        else:
+            self.score[team] += 2
 
     def get_winning_team(self):
         '''When game is done, this can be run to add attributes
@@ -72,7 +79,7 @@ class Game:
         # If it's a tie, let's randomly break that tie and say one
         # team scored a touchdown in over time...
         if self.score[self.teams[1]] == self.score[self.teams[0]]:
-            self.touchdown(self.teams[0])
+            self.touchdown(self.teams[random.randint(0, 1)])
 
         v = list(self.score.values())
         k = list(self.score.keys())

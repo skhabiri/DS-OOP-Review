@@ -1,19 +1,24 @@
-'''Tracks the season perfomance of different teams and generates a
-'''
+"""
+Tracks the season perfomance of different teams and
+generates a report.
+"""
+
 from possible_values import *
 from game import Game
 from random import randint, uniform, sample
 
 
-def generate_rand_games(n=15):
-    '''Generate n random games using value lists in possible_values
-    '''
-    # Begin with enpty list
+def generate_rand_games(n=20):
+    """Generate n random games of class Game using value 
+    lists in possible_values
+    """
+    # Begin with empty list
     games = []
 
     # For the specified number of games, create an instance of the Game
     # class...
     # TODO - You can also include the location and week number if desired
+
     for _ in list(range(n)):
         # Get team names by sampling team_names from possible_values
         game = Game(teams=sample(team_names, k=2))
@@ -37,15 +42,16 @@ def generate_rand_games(n=15):
 
 
 def season_report(games):
-    '''Print out a season report given a list of games
+    """Print out a season report given a list of games
 
     Parameters
     -----------------------------
     games : list
         a list of Game class instances
-    '''
+    """
     # Instantiate empty set and lists
     teams = set()
+    score_dict = dict()
     winning_teams = []
     losing_teams = []
     winning_team_total_points = 0
@@ -56,6 +62,11 @@ def season_report(games):
         # Ensure both teams are included in the set of teams
         teams.add(game.teams[0])
         teams.add(game.teams[1])
+
+        for team in game.teams:
+            if team not in score_dict:
+                score_dict[team] = 0
+            score_dict[team] += game.score[team]
 
         # Record the winning and losing teams for each game
         winning_team, losing_team = game.get_winning_team()
@@ -69,14 +80,14 @@ def season_report(games):
     # Calculates the average points scored by winning team and losing team
     # in a game
     winning_team_average = (winning_team_total_points /
-                            len(winning_team))
+                            len(winning_teams))
     losing_team_average = (losing_team_total_points /
-                           len(losing_team))
+                           len(losing_teams))
 
     # Instantiate dict to keep track of individual team records
     team_records = {}
 
-    # Could use a defaultdict from collections, but I chose to
+    # Could use a default dict from collections, but I chose to
     # manually set the default value for each team in the teams set
     for team in list(teams):
         team_records[team] = [0, 0]
@@ -97,6 +108,10 @@ def season_report(games):
     print('---------------------------------')
     print(f'Average Score of Winning Team: {winning_team_average: .1f}')
     print(f'Average Score of Losing Team: {losing_team_average:.1f}\n')
+    print("score_dict:\n", score_dict)
+    vscore = list(score_dict.values())
+    kscore = list(score_dict.keys())
+    print("winner", kscore[vscore.index(max(vscore))])
 
     # You could choose to return something here if you wanted TODO
 
