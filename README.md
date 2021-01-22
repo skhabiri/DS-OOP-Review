@@ -44,6 +44,14 @@ Another example of oop about football is in https://github.com/skhabiri/DS-OOP-R
    1. Function: generate_rand_games(n=20)        # based on the team names in possible_values.py generate n random instances of Game(), pick pair of random teams and assign random scores. Returns list of games
    2. Function: season_report(games): saves list of winning and losing teams for each game, and saves the total scores of all winning and all losing teams. Saves a dictionary of each team with it’s total scores. Record number of wins and losses for each team in a dictionary. Report each team’s number of wins and lossed, report the average score of a winning/losing team. Report the team with overall highest score as the winner.
 
+### Unit Testing:
+For testing the individial methods:
+```
+cd DS-OOP-Review     # project directory
+pipenv shell         # activate virtual environment
+python football/football_test.py --verbose      # run the test module from command prompt
+```
+
 
 
 
